@@ -93,6 +93,7 @@ typedef uint32_t PortMask;
 #define SSD1306_SETLOWCOLUMN 0x00  ///< Not currently used
 #define SSD1306_SETHIGHCOLUMN 0x10 ///< Not currently used
 #define SSD1306_SETSTARTLINE 0x40  ///< See datasheet
+#define SSD1306_PAGESTART 0xB0
 
 #define SSD1306_EXTERNALVCC 0x01  ///< External display voltage source
 #define SSD1306_SWITCHCAPVCC 0x02 ///< Gen. display voltage from 3.3V
@@ -128,11 +129,14 @@ public:
   // NEW CONSTRUCTORS -- recommended for new projects
   Adafruit_SSD1306(uint8_t w, uint8_t h, TwoWire *twi = &Wire,
                    int8_t rst_pin = -1, uint32_t clkDuring = 400000UL,
-                   uint32_t clkAfter = 100000UL);
+                   uint32_t clkAfter = 100000UL,
+                   bool isSH1106 = false);
   Adafruit_SSD1306(uint8_t w, uint8_t h, int8_t mosi_pin, int8_t sclk_pin,
-                   int8_t dc_pin, int8_t rst_pin, int8_t cs_pin);
+                   int8_t dc_pin, int8_t rst_pin, int8_t cs_pin,
+                   bool isSH1106 = false);
   Adafruit_SSD1306(uint8_t w, uint8_t h, SPIClass *spi, int8_t dc_pin,
-                   int8_t rst_pin, int8_t cs_pin, uint32_t bitrate = 8000000UL);
+                   int8_t rst_pin, int8_t cs_pin, uint32_t bitrate = 8000000UL,
+                   bool isSH1106 = false);
 
   // DEPRECATED CONSTRUCTORS - for back compatibility, avoid in new projects
   Adafruit_SSD1306(int8_t mosi_pin, int8_t sclk_pin, int8_t dc_pin,
@@ -180,6 +184,7 @@ private:
   uint32_t wireClk;    // Wire speed for SSD1306 transfers
   uint32_t restoreClk; // Wire speed following SSD1306 transfers
 #endif
+  bool isSH1106;
   uint8_t contrast; // normal contrast setting for this device
 #if defined(SPI_HAS_TRANSACTION)
 protected:
